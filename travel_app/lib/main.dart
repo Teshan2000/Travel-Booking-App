@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app/screens/home.dart';
 import 'package:travel_app/screens/login.dart';
+import 'package:travel_app/screens/register.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -20,6 +22,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
+        'login': (context) => LoginPage(),
+        'register': (context) => RegisterPage(),
+        'home': (context) => Home(),
       },
     );
   }

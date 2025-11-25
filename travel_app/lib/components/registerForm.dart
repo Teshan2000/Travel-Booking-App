@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app/components/button.dart';
+import 'package:travel_app/services/authService.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -10,9 +11,27 @@ class RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
+  final AuthService _authService = AuthService();
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
   final _confirmPassController = TextEditingController();
+
+  void register() async{
+    final response = await _authService.register(
+      _emailController.text, _passController.text
+    );
+
+    try {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Registration successful!"))
+      );
+      Navigator.of(context).pushNamed('login');
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Registration failed!"))
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +126,9 @@ class _RegisterFormState extends State<RegisterForm> {
           Button(
             title: 'Register', 
             disable: false, 
-            onPressed: () {}
+            onPressed: () {
+              register();
+            },
           ),
         ],
       ),
