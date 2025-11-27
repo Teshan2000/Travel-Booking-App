@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app/components/button.dart';
+import 'package:travel_app/screens/home.dart';
 import 'package:travel_app/services/authService.dart';
 
 class LoginForm extends StatefulWidget {
@@ -16,20 +17,23 @@ class _LoginFormState extends State<LoginForm> {
   final _passController = TextEditingController();
 
   void login() async {
-    final response = await _authservice.login(
+    final result = await _authservice.login(
       _emailController.text,
       _passController.text,
     );
 
-    try {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Login successful!")));
-      Navigator.of(context).pushNamed('home');
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Login failed!")));
+    if (result.containsKey('accessToken')) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Login successful!")));
+        
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => Home(
+          accessToken: result['accessToken'],
+          refreshToken: result['refreshToken'],))
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Login failed!")));
     }
   }
 

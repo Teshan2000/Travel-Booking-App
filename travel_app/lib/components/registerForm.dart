@@ -16,20 +16,26 @@ class _RegisterFormState extends State<RegisterForm> {
   final _passController = TextEditingController();
   final _confirmPassController = TextEditingController();
 
-  void register() async{
-    final response = await _authService.register(
-      _emailController.text, _passController.text
-    );
+  void register() async {
+    if (_passController != _confirmPassController) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Password do not match!")));
 
-    try {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Registration successful!"))
+    } else {
+      final result = await _authService.register(
+        _emailController.text,
+        _passController.text,
       );
-      Navigator.of(context).pushNamed('login');
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Registration failed!"))
-      );
+
+      try {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Registration successful!")));
+        Navigator.of(context).pushNamed('login');
+
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Registration failed!")));
+      }
     }
   }
 
@@ -53,20 +59,21 @@ class _RegisterFormState extends State<RegisterForm> {
                 borderRadius: BorderRadius.circular(20),
                 borderSide: BorderSide(
                   color: const Color.fromRGBO(28, 161, 255, 1),
-              )),
+                ),
+              ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
                 borderSide: const BorderSide(
                   color: Color.fromRGBO(28, 161, 255, 1),
-              )),
+                ),
+              ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
-                borderSide: const BorderSide(
-                  color: Colors.red,
-              )),
+                borderSide: const BorderSide(color: Colors.red),
+              ),
             ),
           ),
-          const SizedBox(height: 15),   
+          const SizedBox(height: 15),
           TextFormField(
             controller: _passController,
             decoration: InputDecoration(
@@ -81,20 +88,21 @@ class _RegisterFormState extends State<RegisterForm> {
                 borderRadius: BorderRadius.circular(20),
                 borderSide: BorderSide(
                   color: const Color.fromRGBO(28, 161, 255, 1),
-              )),
+                ),
+              ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
                 borderSide: const BorderSide(
                   color: Color.fromRGBO(28, 161, 255, 1),
-              )),
+                ),
+              ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
-                borderSide: const BorderSide(
-                  color: Colors.red,
-              )),
+                borderSide: const BorderSide(color: Colors.red),
+              ),
             ),
           ),
-          const SizedBox(height: 15),   
+          const SizedBox(height: 15),
           TextFormField(
             controller: _confirmPassController,
             decoration: InputDecoration(
@@ -109,23 +117,24 @@ class _RegisterFormState extends State<RegisterForm> {
                 borderRadius: BorderRadius.circular(20),
                 borderSide: BorderSide(
                   color: const Color.fromRGBO(28, 161, 255, 1),
-              )),
+                ),
+              ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
                 borderSide: const BorderSide(
                   color: Color.fromRGBO(28, 161, 255, 1),
-              )),
+                ),
+              ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
-                borderSide: const BorderSide(
-                  color: Colors.red,
-              )),
+                borderSide: const BorderSide(color: Colors.red),
+              ),
             ),
           ),
-          const SizedBox(height: 20),   
+          const SizedBox(height: 20),
           Button(
-            title: 'Register', 
-            disable: false, 
+            title: 'Register',
+            disable: false,
             onPressed: () {
               register();
             },
