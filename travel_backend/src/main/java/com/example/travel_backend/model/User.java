@@ -1,4 +1,4 @@
-package com.postgresql.user_auth.model;
+package com.example.travel_backend.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,8 +14,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private long id;
-    private String username;
+    private Long id;
     private String email;
     private String password;
 }

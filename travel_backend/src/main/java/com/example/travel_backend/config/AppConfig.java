@@ -1,4 +1,4 @@
-package com.example.auth_backend.config;
+package com.example.travel_backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

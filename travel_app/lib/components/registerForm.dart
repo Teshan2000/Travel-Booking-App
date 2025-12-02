@@ -17,7 +17,7 @@ class _RegisterFormState extends State<RegisterForm> {
   final _confirmPassController = TextEditingController();
 
   void register() async {
-    if (_passController != _confirmPassController) {
+    if (_passController.text != _confirmPassController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Password do not match!")));
 
