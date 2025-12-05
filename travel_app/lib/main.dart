@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travel_app/screens/home.dart';
 import 'package:travel_app/screens/login.dart';
 import 'package:travel_app/screens/register.dart';
-void main() {
-  runApp(const MyApp());
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final storage = FlutterSecureStorage();
+
+  final accessToken = await storage.read(key: 'accessToken');
+  runApp(MyApp(isLoggedIn: accessToken != null));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.isLoggedIn});
+
+  final bool isLoggedIn;
   static final navigatorKey = GlobalKey<NavigatorState>();
 
   @override
@@ -21,10 +29,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginPage(),
+        '/': (context) => isLoggedIn ? Home() : LoginPage(),
         'login': (context) => LoginPage(),
         'register': (context) => RegisterPage(),
-        'home': (context) => Home(accessToken: '', refreshToken: '',),
+        'home': (context) => Home(),
       },
     );
   }

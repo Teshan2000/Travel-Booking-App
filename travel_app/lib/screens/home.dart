@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_app/components/button.dart';
 
 class Home extends StatelessWidget {
-  final String accessToken;
-  final String refreshToken;
-
-  const Home({super.key, required this.accessToken, required this.refreshToken});
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +34,7 @@ class Home extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                child: SelectableText(accessToken),
+                child: SelectableText('accessToken'),
               )),
             const SizedBox(height: 30),
             Text(
@@ -54,7 +51,7 @@ class Home extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                child: SelectableText(refreshToken),
+                child: SelectableText('refreshToken'),
               )),
             const SizedBox(height: 30),          
             Button(
